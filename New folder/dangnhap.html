@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="dangnhap.css">
+    <title>Đăng nhập/Đăng ký</title>
+  </head>
+  <body>
+    <h1>Wellcome back!</h1>
+    <div class="container" id="login-container">
+      <h3 class="title">Đăng nhập</h3>
+      <div class="input-container">
+        <label for="username">Tài khoản:</label>
+        <input type="text" id="username" name="username">
+      </div>
+      <div class="input-container">
+        <label for="password">Mật khẩu:</label>
+        <input type="password" id="password" name="password">
+      </div>
+      <div class="button-container">
+        <button onclick="dangNhap()">Đăng nhập</button>
+      </div>
+      <div id="login-error" class="error-message"></div>
+      <div id="register-link">
+        Bạn chưa có tài khoản? <a href="#" onclick="chuyenSangDangKy()">Đăng ký</a>
+      </div>
+    </div>
+
+    <div class="container" id="register-container" style="display: none;">
+      <h3 class="title">Đăng ký</h3>
+      <div class="input-container">
+        <label for="new-username">Tài khoản:</label>
+        <input type="text" id="new-username" name="new-username">
+      </div>
+      <div class="input-container">
+        <label for="new-password">Mật khẩu:</label>
+        <input type="password" id="new-password" name="new-password">
+      </div>
+      <div class="button-container">
+        <button onclick="dangKy()">Đăng ký</button>
+      </div>
+      <div id="register-error" class="error-message"></div>
+      <div id="login-link">
+        Bạn đã có tài khoản? <a href="#" onclick="chuyenSangDangNhap()">Đăng nhập</a>
+      </div>
+    </div>
+
+    <script src="dangnhap.js"></script>
+  </body>
+</html>

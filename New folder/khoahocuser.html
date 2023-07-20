@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="khoahoc.css">
+	<title>Chọn khóa học user</title>
+</head>
+<body>
+	<div class="header">
+		<div class="user-info">
+			<span class="username" id="username">Tên đăng nhập</span>
+			<button class="logout-button">Đăng xuất</button>
+		</div>
+	</div>
+
+	<div class="container">
+		<div class="item">
+			<img src="html.png">
+			<a href="#" style="text-decoration: none;" class="button">Vào học</a> 
+		</div>
+		<div class="item">
+			<img src="css.png">
+			<a href="taocauhoiuser.html" style="text-decoration: none;" class="button">Vào học</a> 
+		</div>
+		<div class="item">
+			<img src="js.png">
+			<a href="#" style="text-decoration: none;" class="button">Vào học</a> 
+		</div>
+	</div>
+
+	<script>
+		// Lấy thông tin đăng nhập từ Local Storage
+		var loggedInUser = localStorage.getItem('loggedInUser');
+		var usernameElement = document.getElementById('username');
+		var logoutButton = document.querySelector('.logout-button');
+
+		if (loggedInUser) {
+			usernameElement.textContent = loggedInUser;
+		}
+
+		// Xử lý sự kiện click của nút đăng xuất
+		logoutButton.addEventListener('click', function() {
+			// Xóa giá trị của biến loggedInUser trong Local Storage
+			localStorage.removeItem('loggedInUser');
+			// Chuyển hướng người dùng về trang đăng nhập
+			window.location.href = 'dangnhap.html';
+		});
+	</script>
+</body>
+</html>

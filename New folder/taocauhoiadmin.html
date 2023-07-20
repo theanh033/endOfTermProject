@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="taocauhoiadmin.css">
+    <title>Tạo câu hỏi</title>
+</head>
+<body>
+    <div class="header">
+        <div class="user-info">
+            <span class="username" id="username">Tên đăng nhập</span>
+            <button class="logout-button">Đăng xuất</button>
+        </div>
+    </div>
+    <h1>Thêm câu hỏi trắc nghiệm</h1>
+
+    <form id="question-form">
+        <label for="question">Câu hỏi:</label>
+        <input type="text" id="question" name="question">
+
+        <label for="question-type">Loại câu hỏi:</label>
+        <select id="question-type" name="question-type">
+            <option value="single">Một đáp án</option>
+            <option value="multiple">Nhiều đáp án</option>
+        </select>
+
+        <label for="options">Các đáp án:</label>
+        <div id="options-container">
+            <div class="option">
+                <input type="checkbox" name="correct-option">
+                <input type="text" name="option-text" placeholder="Đáp án 1">
+            </div>
+            <div class="option">
+                <input type="checkbox" name="correct-option">
+                <input type="text" name="option-text" placeholder="Đáp án 2">
+            </div>
+        </div>
+
+        <button type="button" onclick="addOption()">Thêm đáp án</button>
+        <button type="submit">Thêm câu hỏi</button>
+    </form>
+
+    <h2>Danh sách câu hỏi</h2>
+
+    <table id="question-table">
+        <thead>
+            <tr>
+                <th>Câu hỏi</th>
+                <th>Loại câu hỏi</th>
+                <th>Số đáp án</th>
+                <th>Đáp án đúng</th>
+                <th>Người thêm</th>
+                <th>Xóa</th>
+            </tr>
+        </thead>
+        <tbody id="question-list">
+        </tbody>
+    </table>
+</body>
+
+<script src="taocauhoiadmin.js"></script>
+</html>

@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tạo câu hỏi</title>
+</head>
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    form {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    select {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .success-message {
+      color: green;
+      margin-top: 10px;
+    }
+
+    .option {
+      margin-bottom: 10px;
+    }
+
+    .option input[type="text"] {
+      margin-left: 10px;
+    }
+
+    .edit-button {
+      background-color: #f1c40f;
+      margin-left: 5px;
+    }
+
+    .edit-button:hover {
+      background-color: #f39c12;
+    }
+
+    .delete-button {
+      background-color: #e74c3c;
+      margin-left: 5px;
+    }
+
+    .delete-button:hover {
+      background-color: #c0392b;
+    }
+
+    .option-row:hover .edit-button,
+    .option-row:hover .delete-button {
+      display: inline-block;
+    }
+</style>
+    <body>
+        <h1>Thêm câu hỏi trắc nghiệm</h1>
+
+        <form id="question-form">
+            <label for="question">Câu hỏi:</label>
+            <input type="text" id="question" name="question">
+
+            <label for="question-type">Loại câu hỏi:</label>
+            <select id="question-type" name="question-type">
+                <option value="single">Một đáp án</option>
+                <option value="multiple">Nhiều đáp án</option>
+            </select>
+
+            <label for="options">Các đáp án:</label>
+            <div id="options-container">
+                <div class="option">
+                    <input type="checkbox" name="correct-option">
+                    <input type="text" name="option-text" placeholder="Đáp án 1">
+                </div>
+                <div class="option">
+                    <input type="checkbox" name="correct-option">
+                    <input type="text" name="option-text" placeholder="Đáp án 2">
+                </div>
+            </div>
+
+            <button type="button" onclick="themLuaChon()">Thêm đáp án</button>
+            <button type="submit">Thêm câu hỏi</button>
+        </form>
+
+        <h2>Danh sách câu hỏi</h2>
+
+        <table id="question-table">
+            <thead>
+                <tr>
+                    <th>Câu hỏi</th>
+                    <th>Loại câu hỏi</th>
+                    <th>Số đáp án</th>
+                    <th>Đáp án đúng</th>
+                    <th>Người thêm</th>
+                    <th>Chỉnh sửa</th>
+                </tr>
+            </thead>
+            <tbody id="question-list">
+            </tbody>
+        </table>
+
+        <script>
+    // Lấy thông tin đăng nhập từ Local Storage
+    var loggedInUser = localStorage.getItem('loggedInUser');
+
+    var indexDangChinhSua = -1;
+
+    function themLuaChon() {
+      var optionsContainer = document.getElementById('options-container');
+      var viTriLuaChon = optionsContainer.getElementsByClassName('option').length;
+
+      var divLuaChon = document.createElement('div');
+      divLuaChon.classList.add('option');
+
+      var checkboxInput = document.createElement('input');
+      checkboxInput.type = 'checkbox';
+      checkboxInput.name = 'correct-option';
+
+      var textInput = document.createElement('input');
+      textInput.type = 'text';
+      textInput.name = 'option-text';
+      textInput.placeholder = 'Đáp án ' + (viTriLuaChon + 1);
+
+      divLuaChon.appendChild(checkboxInput);
+      divLuaChon.appendChild(textInput);
+
+      optionsContainer.appendChild(divLuaChon);
+    }
+
+    function chinhSuaCauHoi(index) {
+      var questionList = document.getElementById('question-list');
+      var row = questionList.rows[index];
+      var questionCell = row.cells[0];
+      var questionTypeCell = row.cells[1];
+      var optionsCell = row.cells[2];
+      var correctAnswerCell = row.cells[3];
+
+      var question = questionCell.textContent;
+      var questionType = questionTypeCell.textContent === 'Một đáp án' ? 'single' : 'multiple';
+      var options = optionsCell.textContent;
+      var correctAnswer = correctAnswerCell.textContent.split(', ');
+
+      document.getElementById('question').value = question;
+      document.getElementById('question-type').value = questionType;
+
+      var optionsContainer = document.getElementById('options-container');
+      optionsContainer.innerHTML = '';
+
+      for (var i = 0; i < options; i++) {
+        var divLuaChon = document.createElement('div');
+        divLuaChon.classList.add('option');
+
+        var checkboxInput = document.createElement('input');
+        checkboxInput.type = 'checkbox';
+        checkboxInput.name = 'correct-option';
+        checkboxInput.checked = correctAnswer.includes(row.cells[i + 4].textContent);
+
+        var textInput = document.createElement('input');
+        textInput.type = 'text';
+        textInput.name = 'option-text';
+        textInput.value = row.cells[i + 4].textContent;
+
+        divLuaChon.appendChild(checkboxInput);
+        divLuaChon.appendChild(textInput);
+
+        optionsContainer.appendChild(divLuaChon);
+      }
+
+      indexDangChinhSua = index;
+    }
+
+    function xoaCauHoi(index) {
+      var questionList = document.getElementById('question-list');
+      var row = questionList.rows[index];
+      var question = row.cells[0].textContent;
+
+      if (confirm('Bạn có chắc chắn muốn xóa câu hỏi: ' + question + '?')) {
+        questionList.deleteRow(index);
+        luuCauHoiVaoLocalStorage();
+      }
+    }
+
+    document.getElementById('question-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      var question = document.getElementById('question').value;
+      var questionType = document.getElementById('question-type').value;
+      var optionsContainer = document.getElementById('options-container');
+      var options = optionsContainer.getElementsByClassName('option');
+
+      var danhSachLuaChon = Array.from(options).map(function(option) {
+        var checkboxInput = option.querySelector('input[type="checkbox"]');
+        var textInput = option.querySelector('input[type="text"]');
+
+        return {
+          text: textInput.value.trim(),
+          correct: checkboxInput.checked
+        };
+      });
+
+      var questionTable = document.getElementById('question-list');
+      var dongMoi;
+
+      if (indexDangChinhSua !== -1) {
+        dongMoi = questionTable.rows[indexDangChinhSua];
+        indexDangChinhSua = -1;
+      } else {
+        dongMoi = questionTable.insertRow();
+      }
+
+      dongMoi.innerHTML = `
+        <td>${question}</td>
+        <td>${questionType === 'single' ? 'Một đáp án' : 'Nhiều đáp án'}</td>
+        <td>${danhSachLuaChon.length}</td>
+        <td>${danhSachLuaChon
+          .filter(function(option) {
+            return option.correct;
+          })
+          .map(function(option) {
+            return option.text;
+          })
+          .join(', ')}</td>
+        <td>${loggedInUser}</td>
+        <td>
+          <button type="button" class="edit-button" onclick="chinhSuaCauHoi(${dongMoi.rowIndex})">Chỉnh sửa</button>
+          <button type="button" class="delete-button" onclick="xoaCauHoi(${dongMoi.rowIndex})">Xóa</button>
+        </td>
+      `;
+
+      document.getElementById('question').value = '';
+      document.getElementById('question-type').value = 'single';
+      optionsContainer.innerHTML = '';
+
+      var successMessage = document.createElement('div');
+      successMessage.textContent = 'Câu hỏi đã được thêm hoặc chỉnh sửa thành công!';
+      successMessage.classList.add('success-message');
+
+      document.body.appendChild(successMessage);
+      setTimeout(function() {
+        successMessage.remove();
+      }, 3000);
+
+      luuCauHoiVaoLocalStorage();
+    });
+
+    function luuCauHoiVaoLocalStorage() {
+      var questionTable = document.getElementById('question-list');
+      var danhSachCauHoi = [];
+
+      for (var i = 0; i < questionTable.rows.length; i++) {
+        var row = questionTable.rows[i];
+        var question = row.cells[0].textContent;
+        var questionType = row.cells[1].textContent === 'Một đáp án' ? 'single' : 'multiple';
+        var options = row.cells[2].textContent;
+        var correctAnswer = row.cells[3].textContent.split(', ');
+        var nguoiThem = row.cells[4].textContent;
+
+        var cauHoi = {
+          question: question,
+          questionType: questionType,
+          options: options,
+          correctAnswer: correctAnswer,
+          nguoiThem: nguoiThem
+        };
+
+        danhSachCauHoi.push(cauHoi);
+      }
+
+      localStorage.setItem('danhSachCauHoi', JSON.stringify(danhSachCauHoi));
+    }
+
+    function taiCauHoiTuLocalStorage() {
+      var questionTable = document.getElementById('question-list');
+      questionTable.innerHTML = '';
+
+      var danhSachCauHoi = JSON.parse(localStorage.getItem('danhSachCauHoi')) || [];
+
+      for (var i = 0; i < danhSachCauHoi.length; i++) {
+        var cauHoi = danhSachCauHoi[i];
+
+        var newRow = questionTable.insertRow();
+        newRow.innerHTML = `
+          <td>${cauHoi.question}</td>
+          <td>${cauHoi.questionType === 'single' ? 'Một đáp án' : 'Nhiều đáp án'}</td>
+          <td>${cauHoi.options}</td>
+          <td>${cauHoi.correctAnswer.join(', ')}</td>
+          <td>${cauHoi.nguoiThem}</td>
+          <td>
+            <button type="button" class="edit-button" onclick="chinhSuaCauHoi(${newRow.rowIndex})">Chỉnh sửa</button>
+            <button type="button" class="delete-button" onclick="xoaCauHoi(${newRow.rowIndex})">Xóa</button>
+          </td>
+        `;
+      }
+    }
+
+    // Tải câu hỏi từ Local Storage khi trang được tải lại
+    window.addEventListener('load', function() {
+      taiCauHoiTuLocalStorage();
+    });
+  </script>
+    </body>
+</html>
