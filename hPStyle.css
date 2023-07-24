@@ -9,7 +9,9 @@
 }
 
 body {
-    background-color: whitesmoke;
+    /* background-image: url("assets/bg.jpg"); */
+    background-repeat: repeat-y;
+    background-size: cover;
 }
 a {
     color: #333;
@@ -33,10 +35,6 @@ a {
 .wrapper {
     width: 100%;
     height: 100vh;
-    /* background-image: url("assets/bg.jpg");
-    background-repeat: repeat;
-    background-position: center; */
-    background-size: cover;
 }
 
 /* .header {
@@ -50,14 +48,14 @@ a {
 
 .header {
     width: 100%;
-    padding:0px 30px;
-    margin-top:33px;
+    padding:0px 10px;
     display: flex;
     justify-content: space-between;
-    align-items: center;    
+    align-items: center; 
+    z-index: 100;  
+    position: fixed;
+    background-color: white;
 }
-
-
 
 .nav {
     max-width: 1100px;
@@ -71,6 +69,17 @@ a {
     height: 100%;
     align-items: center;
     justify-content: space-between;
+}
+
+.nav button:hover {
+    background-color: #6002C1;
+    color: white;
+}
+
+.nav_logo,
+.nav_link,
+#btn-logout {
+    color: #000;
 }
 
 .nav_logo,
@@ -87,8 +96,35 @@ a {
     column-gap: 25px;
 }
 
-.nav_link:hover {
-    color: #d9d9d9;
+.nav_link:hover { 
+    color: white;
+    background-color: #6002C1;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.username {
+    margin-left: 40px;
+}
+
+.username:hover {
+    background-color: #6A00CD;
+    padding: 10px;
+    border-radius: 6px;
+    color: white;
+}
+
+#btn-logout {
+    padding: 6px 24px;
+    border: 2px solid #000;
+    background: transparent;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#btn-logout:hover {
+    background-color: #6002C1;
+    color: white;
 }
 
 .login-open {
@@ -105,12 +141,12 @@ a {
 
 #banner {
     width: 100%;
-    background-image: url("assets/bg.jpg");
+    background-color: #272A35; 
     background-repeat: no-repeat;
     background-size: cover;
     height: 463px;
     display: flex;
-    margin-top: 40px;
+    /* margin-top: 100px; */
     padding:0px 133px;
     position: relative;
 }
@@ -129,11 +165,8 @@ a {
     color:#D0D0D0;
 }
 
-#banner .box-left button {
-    width: 191px;
-    height: 40px;
-    margin-top:41px;
-    background:#1d1a1a;
+#banner .box-left a {
+    margin-top:100px;
     border:none;
     outline:none;
     color:#fff;
@@ -142,8 +175,8 @@ a {
     transition:0.4s;
 }
 
-#banner .box-left button:hover {
-    background:orange;
+#banner .box-left a:hover {
+    color: #6101C2;
 }
 
 #banner .box-right {
@@ -183,133 +216,122 @@ a {
     
 }
 
-.to-bottom {
+/* .to-bottom {
     position:absolute;
     bottom:-40px;
     left:50%;
     transform:translateX(-50%);
-}
-
-#wp-products {
-    padding-top:116px;
-    padding-bottom: 78px;
-    padding-left:134px;
-    padding-right:134px;
-}
-
-#wp-products h2 {
-    text-align: center;
-    margin-bottom: 76px;
-    font-size:32px;
-    color:#626a67;
-}
-
-#list-products {
-    display: flex;
-    list-style: none;
-    justify-content: space-around;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-/* #list-products .item {
-    width: 320px;
-    height: 400px;
-    background-color: black;
-    border-radius: 10px;
-    margin-bottom: 50px;
 } */
 
-#list-products .item img {
-    display: block;
-    margin:0px auto;
-}
-
-#list-products .item .name {
-    text-align: center;
-    color:#000;
-    font-weight: bold;
-    margin-top:21px;
-}
-
-/* Home */
-/* .home {
-    position: absolute;
-    height: 100vh;
+.holder {
     width: 100%;
-    background-image: url("assets/bg.jpg");
+    background-color: #272A35; 
+    background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
-}
-.home::before {
-    content: "";
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    z-index: 100;
-    opacity: 0;
-    pointer-events: none;
-    transition: all 0.5s ease-out;
-}
-.home.show::before {
-    opacity: 1;
-    pointer-events: auto;
-} */
-
-.exercise {
-    padding-top:116px;
-    padding-bottom: 78px;
-    padding-left:134px;
-    padding-right:134px;
-}
-
-.list-exercise{
-    margin: auto;
-    width: 1150px;
-    height: auto;
-    border: none;
+    height: 400px;
     display: flex;
-    background-color: transparent;
-}
-.item{
-    margin: 30px 30px 30px;
-    border: 1px solid black;
-    width: 310px;
-    height: 300px;
-    padding: 0px;
+    /* margin-top: 100px; */
+    padding:0px 133px;
     position: relative;
-    margin-right: 50px;
 }
 
-.item p{
-    font-size: 20px;
-    font-weight: bold;
-    text-align: center;
+#html-box {
+    background-color: #D9EDE1;
+}
+
+#css-box {
+    background-color: #FFF3A3;
+}
+
+#js-box {
+    background-color: #272A35;
+}
+
+.holder .left{
+    width: 60%;
+}
+
+.holder .right {
+    width: 40%;
+}
+
+.holder .left {
     display: flex;
-    line-height: 1;
-    font-family: tahoma;
-    position: absolute;
-    bottom: 0px;
-    left: 85px;
-}
-.item img{
-    width: 310px;
-    height: 300px;
+    flex-direction: column;
+    align-items: center;
 }
 
-.item .do-exercise {
-    border-radius: 6px;
-    border: 1px solid #FF4B2B;
-    background-color: #FF4B2B;
-    color: #FFFFFF;
-    font-size: 12px;
-    padding: 10px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    transition: transform 80ms ease-in;
+.holder .left h1 {
+    font-size:100px;
+    margin-top:10px;
+    color:#000;
 }
+
+.holder .left h3 {
+    color:#000;
+    margin: 20px 0px;
+}
+
+.holder .left button {
+    width: 151px;
+    height: 100px;
+    margin: 20px 0px;
+    background:#6002C1;
+    border:none;
+    outline:none;
+    color:#fff;
+    font-weight: bold;
+    border-radius: 20px;
+    transition:0.4s;
+}
+
+.holder .left .tao-cau-hoi {
+    background-color: #FEC0C7;
+}
+
+.holder .left .tao-cau-hoi:hover {
+    background-color: #fca7b0;
+}
+
+
+#js-box h1 {
+    color: #fff;
+}
+
+#js-box h3 {
+    color: #fff;
+}
+
+.holder .right {
+    box-shadow: -10px -10px; 
+    -moz-box-shadow: -10px -10px;  
+    -webkit-box-shadow: -10px -10px; 
+    -o-box-shadow: -10px -10px; 
+    -ms-box-shadow: -10px -10px;
+    background-color: #E6E9EB;
+    margin: 100px 0px;
+    /* display: flex;
+    flex-direction: column; */
+}
+
+.holder .right h4 {
+    font-size: 30px;
+    margin-top: 20px;
+}
+
+.holder .right p {
+    margin-left: 20px;
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+.holder .right input {
+    border: 1px solid black;
+    border-radius: 6px;
+    margin: 30px auto;
+    padding: 5px;
+} 
+
 /* From */
 .container {
     border-radius: 10px;

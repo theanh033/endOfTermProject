@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Questions by Client</title>
+    <link rel="stylesheet" href="aQBCStyle.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <div class="nav">
+                <a href="#" class="nav_logo">WEBDevLearn</a>
+    
+                <ul class="nav_items">
+                    <li class="nav_item">
+                        <a href="#" class="nav_link">Home</a>
+                        <a href="#" class="nav_link">Product</a>
+                        <a href="#" class="nav_link">Services</a>
+                        <a href="#" class="nav_link">Contact</a>
+                    </li>
+                </ul>
+    
+                <span class="username" id="username">Tên đăng nhập</span>
+			    <button class="logout" id="btn-logout" type="submit">Đăng xuất</button>
+            </div>
+        </div>
+
+        <div class="main">
+            <h1>Thêm câu hỏi trắc nghiệm</h1>
+
+            <form id="question-form">
+                <label for="question">Câu hỏi:</label>
+                <input type="text" id="question" name="question">
+    
+                <label for="question-type">Loại câu hỏi:</label>
+                <select id="question-type" name="question-type">
+                    <option value="single">Một đáp án</option>
+                    <option value="multiple">Nhiều đáp án</option>
+                </select>
+    
+                <label for="options">Các đáp án:</label>
+                <div id="options-container">
+                    <div class="option">
+                        <input type="checkbox" name="correct-option">
+                        <input type="text" name="option-text" placeholder="Đáp án 1">
+                    </div>
+                    <div class="option">
+                        <input type="checkbox" name="correct-option">
+                        <input type="text" name="option-text" placeholder="Đáp án 2">
+                    </div>
+                </div>
+    
+                <button type="button" onclick="addOption()">Thêm đáp án</button>
+                <button type="submit">Thêm câu hỏi</button>
+            </form>
+    
+            <h2>Danh sách câu hỏi</h2>
+    
+            <table id="question-table">
+                <thead>
+                    <tr>
+                        <th>Câu hỏi</th>
+                        <th>Loại câu hỏi</th>
+                        <th>Số đáp án</th>
+                        <th>Đáp án đúng</th>
+                        <th>Người thêm</th>
+                    </tr>
+                </thead>
+                <tbody id="question-list">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="aQBCScriptClient.js"></script>
+</body>
+</html>
