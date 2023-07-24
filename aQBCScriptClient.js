@@ -13,6 +13,10 @@ logoutButton.addEventListener('click', function() {
   window.location.href = 'signForm.html';
 });
 
+function BackHomeUser(){
+    window.location.href = "homePageForClient.html"
+}
+
 function addOption() {
     var optionsContainer = document.getElementById('options-container');
     var optionIndex = optionsContainer.getElementsByClassName('option').length;
@@ -118,3 +122,4 @@ if (storedQuestions) {
         }
     });
 }
+

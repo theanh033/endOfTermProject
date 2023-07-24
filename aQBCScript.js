@@ -6,135 +6,139 @@ if (loggedInUser) {
     usernameElement.textContent = loggedInUser;
 }
 
-logoutButton.addEventListener('click', function() {
-  // Xóa giá trị của biến loggedInUser trong Local Storage
-  localStorage.removeItem('loggedInUser');
-  // Chuyển hướng người dùng về trang đăng nhập
-  window.location.href = 'signForm.html';
+logoutButton.addEventListener('click', function () {
+    // Xóa giá trị của biến loggedInUser trong Local Storage
+    localStorage.removeItem('loggedInUser');
+    // Chuyển hướng người dùng về trang đăng nhập
+    window.location.href = 'signForm.html';
 });
 
- function addOption() {
-     var optionsContainer = document.getElementById('options-container');
-     var optionIndex = optionsContainer.getElementsByClassName('option').length;
+function BackHomeAdmin() {
+    window.location.href = "homePageForAdmin.html"
+}
 
-     var optionDiv = document.createElement('div');
-     optionDiv.classList.add('option');
+function addOption() {
+    var optionsContainer = document.getElementById('options-container');
+    var optionIndex = optionsContainer.getElementsByClassName('option').length;
 
-     var checkboxInput = document.createElement('input');
-     checkboxInput.type = 'checkbox';
-     checkboxInput.name = 'correct-option';
+    var optionDiv = document.createElement('div');
+    optionDiv.classList.add('option');
 
-     var textInput = document.createElement('input');
-     textInput.type = 'text';
-     textInput.name = 'option-text';
-     textInput.placeholder = 'Đáp án ' + (optionIndex + 1);
+    var checkboxInput = document.createElement('input');
+    checkboxInput.type = 'checkbox';
+    checkboxInput.name = 'correct-option';
 
-     optionDiv.appendChild(checkboxInput);
-     optionDiv.appendChild(textInput);
+    var textInput = document.createElement('input');
+    textInput.type = 'text';
+    textInput.name = 'option-text';
+    textInput.placeholder = 'Đáp án ' + (optionIndex + 1);
 
-     optionsContainer.appendChild(optionDiv);
- }
+    optionDiv.appendChild(checkboxInput);
+    optionDiv.appendChild(textInput);
 
- function deleteQuestionRow(row) {
-     var questionTable = document.getElementById('question-table');
-     questionTable.deleteRow(row.rowIndex);
+    optionsContainer.appendChild(optionDiv);
+}
 
-     // Lưu danh sách câu hỏi vào Local Storage
-     var questions = [];
-     for (var i = 0; i < questionTable.rows.length; i++) {
-         var questionRow = questionTable.rows[i];
-         var question = {
-             question: questionRow.cells[0].textContent,
-             questionType: questionRow.cells[1].textContent === 'Một đáp án' ? 'single' : 'multiple',
-             options: [],
-             correctAnswers: questionRow.cells[3].textContent.split(', '),
-             user: questionRow.cells[4].textContent
-         };
+function deleteQuestionRow(row) {
+    var questionTable = document.getElementById('question-table');
+    questionTable.deleteRow(row.rowIndex);
 
-         for (var j = 4; j < questionRow.cells.length - 1; j++) {
-             question.options.push(questionRow.cells[j].textContent);
-         }
+    // Lưu danh sách câu hỏi vào Local Storage
+    var questions = [];
+    for (var i = 0; i < questionTable.rows.length; i++) {
+        var questionRow = questionTable.rows[i];
+        var question = {
+            question: questionRow.cells[0].textContent,
+            questionType: questionRow.cells[1].textContent === 'Một đáp án' ? 'single' : 'multiple',
+            options: [],
+            correctAnswers: questionRow.cells[3].textContent.split(', '),
+            user: questionRow.cells[4].textContent
+        };
 
-         questions.push(question);
-     }
+        for (var j = 4; j < questionRow.cells.length - 1; j++) {
+            question.options.push(questionRow.cells[j].textContent);
+        }
 
-     localStorage.setItem('questions', JSON.stringify(questions));
- }
+        questions.push(question);
+    }
 
- document.getElementById('question-form').addEventListener('submit', function(event) {
-     event.preventDefault();
+    localStorage.setItem('questions', JSON.stringify(questions));
+}
 
-     var question = document.getElementById('question').value;
-     var questionType = document.getElementById('question-type').value;
-     var optionsContainer = document.getElementById('options-container');
-     var options = optionsContainer.getElementsByClassName('option');
+document.getElementById('question-form').addEventListener('submit', function (event) {
+    event.preventDefault();
 
-     var optionList = Array.from(options).map(function(option) {
-         var checkboxInput = option.querySelector('input[type="checkbox"]');
-         var textInput = option.querySelector('input[type="text"]');
+    var question = document.getElementById('question').value;
+    var questionType = document.getElementById('question-type').value;
+    var optionsContainer = document.getElementById('options-container');
+    var options = optionsContainer.getElementsByClassName('option');
 
-         return {
-             text: textInput.value.trim(),
-             correct: checkboxInput.checked
-         };
-     });
+    var optionList = Array.from(options).map(function (option) {
+        var checkboxInput = option.querySelector('input[type="checkbox"]');
+        var textInput = option.querySelector('input[type="text"]');
 
-     var questionTable = document.getElementById('question-list');
-     var newRow = questionTable.insertRow();
+        return {
+            text: textInput.value.trim(),
+            correct: checkboxInput.checked
+        };
+    });
 
-     newRow.innerHTML = `
+    var questionTable = document.getElementById('question-list');
+    var newRow = questionTable.insertRow();
+
+    newRow.innerHTML = `
          <td>${question}</td>
          <td>${questionType === 'single' ? 'Một đáp án' : 'Nhiều đáp án'}</td>
          <td>${optionList.length}</td>
          <td>${optionList
-             .filter(function(option) {
-                 return option.correct;
-             })
-             .map(function(option) {
-                 return option.text;
-             })
-             .join(', ')}</td>
+            .filter(function (option) {
+                return option.correct;
+            })
+            .map(function (option) {
+                return option.text;
+            })
+            .join(', ')}</td>
          <td>${loggedInUser}</td>
          <td>
              <button type="button" onclick="deleteQuestionRow(this.parentNode.parentNode)">Xóa</button>
          </td>
      `;
 
-     document.getElementById('question').value = '';
-     document.getElementById('question-type').value = 'single';
-     optionsContainer.innerHTML = '';
+    document.getElementById('question').value = '';
+    document.getElementById('question-type').value = 'single';
+    optionsContainer.innerHTML = '';
 
-     // Lưu danh sách câu hỏi vào Local Storage
-     var questions = [];
-     for (var i = 0; i < questionTable.rows.length; i++) {
-         var questionRow = questionTable.rows[i];
-         var question = {
-             question: questionRow.cells[0].textContent,
-             questionType: questionRow.cells[1].textContent === 'Một đáp án' ? 'single' : 'multiple',
-             options: [],
-             correctAnswers: questionRow.cells[3].textContent.split(', '),
-             user: questionRow.cells[4].textContent
-         };
+    // Lưu danh sách câu hỏi vào Local Storage
+    var questions = [];
+    for (var i = 0; i < questionTable.rows.length; i++) {
+        var questionRow = questionTable.rows[i];
+        var question = {
+            question: questionRow.cells[0].textContent,
+            questionType: questionRow.cells[1].textContent === 'Một đáp án' ? 'single' : 'multiple',
+            options: [],
+            correctAnswers: questionRow.cells[3].textContent.split(', '),
+            user: questionRow.cells[4].textContent
+        };
 
-         for (var j = 4; j < questionRow.cells.length - 1; j++) {
-             question.options.push(questionRow.cells[j].textContent);
-         }
+        for (var j = 4; j < questionRow.cells.length - 1; j++) {
+            question.options.push(questionRow.cells[j].textContent);
+        }
 
-         questions.push(question);
-     }
+        questions.push(question);
+    }
 
-     localStorage.setItem('questions', JSON.stringify(questions));
- });
+    localStorage.setItem('questions', JSON.stringify(questions));
+});
 
- // Kiểm tra xem đã có danh sách câu hỏi trong Local Storage chưa
- var storedQuestions = localStorage.getItem('questions');
- if (storedQuestions) {
-     var questions = JSON.parse(storedQuestions);
-     var questionTable = document.getElementById('question-list');
+// Kiểm tra xem đã có danh sách câu hỏi trong Local Storage chưa
+var storedQuestions = localStorage.getItem('questions');
+if (storedQuestions) {
+    var questions = JSON.parse(storedQuestions);
+    var questionTable = document.getElementById('question-list');
 
-     questions.forEach(function(question) {
-         var newRow = questionTable.insertRow();
-         newRow.innerHTML = `
+    questions.forEach(function (question) {
+        var newRow = questionTable.insertRow();
+        newRow.innerHTML = `
              <td>${question.question}</td>
              <td>${question.questionType === 'single' ? 'Một đáp án' : 'Nhiều đáp án'}</td>
              <td>${question.options.length}</td>
@@ -144,9 +148,9 @@ logoutButton.addEventListener('click', function() {
                  <button type="button" onclick="deleteQuestionRow(this.parentNode.parentNode)">Xóa</button>
              </td>
          `;
-         for (var i = 0; i < question.options.length; i++) {
-             var cell = newRow.insertCell();
-             cell.textContent = question.options[i];
-         }
-     });
- }
+        for (var i = 0; i < question.options.length; i++) {
+            var cell = newRow.insertCell();
+            cell.textContent = question.options[i];
+        }
+    });
+}
