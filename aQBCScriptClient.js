@@ -10,7 +10,7 @@ logoutButton.addEventListener('click', function() {
   // Xóa giá trị của biến loggedInUser trong Local Storage
   localStorage.removeItem('loggedInUser');
   // Chuyển hướng người dùng về trang đăng nhập
-  window.location.href = 'signForm.html';
+  window.location.href = 'Index.html';
 });
 
 function BackHomeUser(){
